@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MedLookup — Drug Label Reference</title>
+
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+
+  <script>
+    (function () {
+      var saved = localStorage.getItem('medlookup-theme');
+      if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- ===== SETTINGS BAR ===== -->
+  <!-- Slim strip above the hero, just for the theme toggle. -->
+  <div class="settings-bar">
+    <div class="settings-bar-inner">
+      <div class="brand-mark">MedLookup</div>
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" aria-pressed="false">
+        <span id="theme-toggle-icon">🌙</span>
+        <span id="theme-toggle-label">Dark mode</span>
+      </button>
+    </div>
+  </div>
+
+  
+  <header class="hero">
+    <div class="hero-inner">
+      
+      <h1>MedLookup</h1>
+      <p class="tagline">Search any medicine to see its official FDA label :uses, dosage, warnings, and side effects.</p>
+
+      <form id="search-form" class="search-form" autocomplete="off">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Search a medicine (e.g. ibuprofen, amoxicillin)"
+          aria-label="Search for a medicine"
+          required
+        >
+        <button type="submit">Search</button>
+      </form>
+
+      <!-- Disclaimer lives right under the search bar, always visible, never buried -->
+      <p class="disclaimer">
+        This application provides medicine information for educational purposes only
+        and is not a substitute for professional medical advice.
+      </p>
+    </div>
+  </header>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main>
+    <!-- Status region: loading / error / empty states all render here -->
+    <div id="status" class="status" role="status" aria-live="polite"></div>
+
+    <!-- Search results (multiple label matches) render as a filterable list here -->
+    <section id="results-section" class="results-section hidden">
+      <div class="results-controls">
+        <p id="results-count" class="results-count"></p>
+        <div class="controls-right">
+          <select id="sort-select" class="sort-select" aria-label="Sort results">
+            <option value="az">Name (A–Z)</option>
+            <option value="za">Name (Z–A)</option>
+          </select>
+          <input
+            type="text"
+            id="filter-input"
+            class="filter-input"
+            placeholder="Filter these results…"
+            aria-label="Filter results"
+          >
+        </div>
+      </div>
+      <div id="results-list" class="results-list"></div>
+    </section>
+
+    <!-- Detail view: the "label card" for a single selected drug -->
+    <section id="detail-section" class="detail-section hidden"></section>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      Data from the <a href="https://open.fda.gov/apis/drug/label/" target="_blank" rel="noopener">openFDA Drug Label API</a>,
+      a public database maintained by the U.S. Food and Drug Administration.
+    </p>
+  </footer>
+
+  <script src="theme.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,403 @@
+/* =========================================================
+   DESIGN TOKENS
+   Palette is grounded in the real object this app is about:
+   an amber pill-bottle + its printed white label.
+   ========================================================= */
+:root {
+  --paper:      #EDEEE7;  /* pale sage-grey background, not warm cream */
+  --card:       #FFFFFF;  /* label white */
+  --ink:        #1C2B24;  /* deep forest-ink text */
+  --ink-soft:   #4B5A52;  /* secondary text */
+  --amber:      #B45309;  /* pill-bottle amber — primary accent */
+  --amber-soft: #F2E4D2;  /* pale amber for backgrounds/badges */
+  --warning:    #B3261E;  /* label warning red */
+  --border:     #D8DAD0;
+
+  --font-display: 'Source Serif 4', serif;
+  --font-body:    'Inter', sans-serif;
+  --font-mono:    'IBM Plex Mono', monospace;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.5;
+}
+
+a { color: var(--amber); }
+
+/* =========================================================
+   DARK THEME (driven by [data-theme="dark"] on <html>,
+   set from theme.js and persisted to localStorage)
+   ========================================================= */
+html[data-theme="dark"] {
+  --paper:      #1B211D;
+  --card:       #242B25;
+  --ink:        #EDEEE7;
+  --ink-soft:   #A9B3AB;
+  --amber:      #E08A3C;
+  --amber-soft: #3A2E1E;
+  --border:     #38403A;
+}
+
+/* =========================================================
+   SETTINGS BAR — just the theme toggle
+   ========================================================= */
+.settings-bar {
+  border-bottom: 1px solid var(--border);
+  background: var(--card);
+}
+.settings-bar-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+.brand-mark {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+}
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  padding: 0.35rem 0.8rem;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--ink);
+  cursor: pointer;
+}
+.theme-toggle:hover { border-color: var(--amber); color: var(--amber); }
+.theme-toggle:focus-visible { outline: 2px solid var(--amber-soft); }
+
+/* =========================================================
+   HERO / SEARCH
+   ========================================================= */
+.hero {
+  padding: 4rem 1.5rem 3rem;
+  border-bottom: 1px solid var(--border);
+}
+.hero-inner {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin: 0 0 0.75rem;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 3rem;
+  margin: 0 0 0.75rem;
+}
+.tagline {
+  color: var(--ink-soft);
+  margin: 0 0 2rem;
+  font-size: 1.05rem;
+}
+
+.search-form {
+  display: flex;
+  gap: 0.5rem;
+}
+#search-input {
+  flex: 1;
+  padding: 0.85rem 1rem;
+  font-size: 1rem;
+  font-family: var(--font-body);
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  background: var(--card);
+  color: var(--ink);
+}
+#search-input:focus {
+  outline: 3px solid var(--amber-soft);
+  outline-offset: 1px;
+  border-color: var(--amber);
+}
+.search-form button {
+  padding: 0.85rem 1.5rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  background: var(--amber);
+  color: #FFF;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.search-form button:hover { background: #93400A; }
+.search-form button:focus-visible {
+  outline: 3px solid var(--amber-soft);
+  outline-offset: 2px;
+}
+
+.disclaimer {
+  margin-top: 1.5rem;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  font-style: italic;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* =========================================================
+   STATUS (loading / error / empty)
+   ========================================================= */
+.status {
+  max-width: 640px;
+  margin: 2rem auto 0;
+  padding: 0 1.5rem;
+  text-align: center;
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+.status.error { color: var(--warning); }
+
+/* =========================================================
+   RESULTS LIST (search matches, filterable)
+   ========================================================= */
+.hidden { display: none !important; }
+
+.results-section {
+  max-width: 720px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+.results-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.results-count {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin: 0;
+}
+.controls-right {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.filter-input {
+  padding: 0.5rem 0.75rem;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  min-width: 220px;
+  background: var(--card);
+}
+.filter-input:focus {
+  outline: 2px solid var(--amber-soft);
+  border-color: var(--amber);
+}
+.sort-select {
+  padding: 0.5rem 0.6rem;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  background: var(--card);
+  color: var(--ink);
+  cursor: pointer;
+}
+.sort-select:focus {
+  outline: 2px solid var(--amber-soft);
+  border-color: var(--amber);
+}
+
+.results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.result-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--amber);
+  border-radius: 6px;
+  padding: 0.9rem 1.1rem;
+  cursor: pointer;
+  font-family: var(--font-body);
+}
+.result-item:hover { background: var(--amber-soft); }
+.result-item:focus-visible { outline: 2px solid var(--amber); }
+.result-item .name {
+  font-weight: 600;
+  font-size: 1.02rem;
+}
+.result-item .meta {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  margin-top: 0.2rem;
+}
+
+/* =========================================================
+   DETAIL VIEW — the "label card"
+   Signature element: perforated top edge + diagonal
+   "educational use" stamp, like a real prescription label.
+   ========================================================= */
+.detail-section {
+  max-width: 720px;
+  margin: 1rem auto 4rem;
+  padding: 0 1.5rem;
+}
+.back-button {
+  background: none;
+  border: none;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--amber);
+  cursor: pointer;
+  padding: 0.5rem 0;
+  margin-bottom: 0.75rem;
+}
+.back-button:hover { text-decoration: underline; }
+
+.label-card {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(28, 43, 34, 0.06);
+}
+/* perforated edge, drawn with a repeating radial gradient cut into the top */
+.label-card::before {
+  content: "";
+  display: block;
+  height: 10px;
+  background-image: radial-gradient(circle at 6px 0, var(--paper) 5px, transparent 5.5px);
+  background-size: 12px 10px;
+  background-position: center top;
+}
+.label-head {
+  padding: 1.5rem 1.75rem 1.25rem;
+  border-bottom: 2px solid var(--ink);
+}
+.label-head .drug-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.9rem;
+  margin: 0 0 0.3rem;
+}
+.label-head .generic-name {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+.stamp {
+  position: absolute;
+  top: 22px;
+  right: -34px;
+  transform: rotate(28deg);
+  background: transparent;
+  border: 2px solid var(--warning);
+  color: var(--warning);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 34px;
+  opacity: 0.85;
+}
+.show-more-button {
+  margin-top: 0.3rem;
+  padding: 0.7rem;
+  width: 100%;
+  background: transparent;
+  border: 1.5px dashed var(--border);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+.show-more-button:hover { border-color: var(--amber); color: var(--amber); }
+
+.label-body {
+  padding: 0.5rem 1.75rem 1.75rem;
+}
+.label-field {
+  padding: 1rem 0;
+  border-bottom: 1px dashed var(--border);
+}
+.label-field:last-child { border-bottom: none; }
+.label-field h3 {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin: 0 0 0.4rem;
+}
+.label-field p {
+  margin: 0;
+  font-size: 0.94rem;
+  white-space: pre-line;
+}
+.label-field.warning h3 { color: var(--warning); }
+.label-field.warning {
+  background: #FBEAE9;
+  margin: 0 -1.75rem;
+  padding: 1rem 1.75rem;
+  border-bottom: 1px dashed #E5B9B6;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.site-footer {
+  text-align: center;
+  padding: 2rem 1.5rem 3rem;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  border-top: 1px solid var(--border);
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 480px) {
+  .hero h1 { font-size: 2.2rem; }
+  .search-form { flex-direction: column; }
+  .stamp { display: none; } /* stamp overflows on very narrow screens */
+}
+
+/* Respect reduced-motion preference (no motion currently used beyond hover,
+   but this guards any future additions) */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
